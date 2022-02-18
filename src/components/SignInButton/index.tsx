@@ -5,7 +5,6 @@ import { signIn, useSession, signOut } from 'next-auth/react'
 
 export const SignInButton = () => {
   const { data: session } = useSession()
-  console.log("🚀 ~ file: index.tsx ~ line 8 ~ SignInButton ~ session", session)
 
   return session ? (
     <button className='flex items-center gap-3 bg-gray-700 py-3 px-6 rounded-full hover:brightness-[.8] transition-all text-sm'

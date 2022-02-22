@@ -1,7 +1,7 @@
 import { GetStaticProps } from 'next'
 import Head from 'next/head'
 import { SubscribeButton } from 'src/components/SubscribeButton'
-import { stripe } from 'src/services/stripe'
+import { stripe } from '../services/stripe'
 
 interface HomeProps {
   product: {

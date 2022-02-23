@@ -3,15 +3,16 @@ import Head from 'next/head'
 import { SubscribeButton } from 'src/components/SubscribeButton'
 import { stripe } from '../services/stripe'
 
+
 interface HomeProps {
   product: {
-   priceId: string
-   amount: number
+    priceId: string
+    amount: number
   }
 }
 
 export default function Home({ product }: HomeProps) {
-
+  
   return (
     <div className="home">
       <Head>

@@ -1,0 +1,14 @@
+query($slug: String) {
+  postCollection(where: { slug: $slug }) {
+     items {
+        sys {
+          publishedAt
+        }
+        title
+        content {
+          json
+        }
+        slug
+      }
+  }
+}

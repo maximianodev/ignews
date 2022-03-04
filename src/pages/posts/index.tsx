@@ -6,6 +6,9 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import { BLOCKS } from '@contentful/rich-text-types'
 import Head from 'next/head'
 import Link from 'next/link'
+import { graphQLClient } from '../../services/contentful'
+
+import POSTS_QUERY from '../../graphql/Queries/posts.graphql'
 
 type Post = {
   publishedAt: Date
@@ -34,7 +37,7 @@ function Posts({ posts }: PostsProps) {
         <title>Posts | Ignews</title>
       </Head>
       <div className="max-w-screen-md mx-auto mt-10 px-5">
-        {posts.map((post: Post) => <Link href={`/${post.slug}`} key={post.title}>
+        {posts.map((post: Post) => <Link href={`/posts/${post.slug}`} key={post.title}>
           <a className="block mb-10 border-b-[1px] border-[#323238] pb-5 hover:text-yellow transition-colors" >
             <time className='block mb-3 text-[#A8A8B3]'>{post.publishedAt}</time>
             <h3 className='mb-2'>
@@ -50,35 +53,9 @@ function Posts({ posts }: PostsProps) {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-
-  const endpoint = `https://graphql.contentful.com/content/v1/spaces/${process.env.SPACE_ID}/environments/master`
-
-  const graphQLClient = new GraphQLClient(endpoint, {
-    headers: {
-      authorization: `Bearer ${process.env.CDA_TOKEN}`,
-    },
-  })
-
-  const query = gql`
-  query {
-    postCollection {
-      items {
-        sys {
-          publishedAt
-        }
-        title
-        content {
-          json
-        }
-        slug
-      }
-    }
-  }
-`
-
   const { postCollection: {
     items
-  } } = await graphQLClient.request(query)
+  } } = await graphQLClient.request(POSTS_QUERY)
 
   const formatedPosts = items.map((item: any) => {
     return {

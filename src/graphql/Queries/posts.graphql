@@ -1,0 +1,15 @@
+
+  query {
+    postCollection {
+      items {
+        sys {
+          publishedAt
+        }
+        title
+        content {
+          json
+        }
+        slug
+      }
+    }
+  }

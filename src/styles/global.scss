@@ -31,3 +31,17 @@ button {
 a {
   color: inherit;
 }
+
+ul, ol {
+  padding-left: 1rem;
+  font-size: 90%;
+  font-style: italic;
+  position: relative;
+  li {
+    &::before {
+      content: "-";
+      position: absolute;
+      left: 0;
+    }
+  }
+}

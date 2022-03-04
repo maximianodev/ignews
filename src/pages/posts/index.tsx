@@ -1,9 +1,6 @@
 import React from 'react'
 import { GetStaticProps } from 'next'
 
-import { GraphQLClient, gql } from 'graphql-request'
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
-import { BLOCKS } from '@contentful/rich-text-types'
 import Head from 'next/head'
 import Link from 'next/link'
 import { graphQLClient } from '../../services/contentful'
@@ -20,14 +17,6 @@ type Post = {
 
 interface PostsProps {
   posts: Post[]
-}
-
-const RICH_TEXT_OPTIONS: any = {
-  renderNode: {
-    [BLOCKS.PARAGRAPH]: (node: any, children: any) => {
-      return <p>{children}</p>
-    }
-  }
 }
 
 function Posts({ posts }: PostsProps) {

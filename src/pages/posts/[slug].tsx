@@ -1,21 +1,34 @@
-import type { GetServerSideProps } from 'next';
-import { getSession } from 'next-auth/react';
 import React from 'react';
+import type { GetServerSideProps } from 'next';
+
+import { getSession } from 'next-auth/react';
+
+// Queries
 import { graphQLClient } from '../../services/contentful';
 import POST_QUERY from '../../graphql/Queries/post.graphql'
+import { RichTextRender } from 'src/components/RichTextRender';
+
+// Contentful
+import type { Document } from '@contentful/rich-text-types'
 
 type PostProps = {
   post: {
     publishedAt: Date
     title: string
     slug: string
-    content: string
+    content: Document
   }
 }
 
 export default function Post({ post }: PostProps) {
   return (
-    <div>Post</div>
+    <div className="max-w-screen-md mx-auto mt-10 px-5">
+      <h1 className='text-5xl font-bold'>{post.title}</h1>
+      <div className="my-10">
+        <time className='block mb-3 text-[#A8A8B3]'>{post.publishedAt}</time>
+      </div>
+      <RichTextRender postContent={post.content} />
+    </div>
   );
 }
 
@@ -25,6 +38,7 @@ type Params = {
 
 export const getServerSideProps: GetServerSideProps = async ({ req, params }) => {
   const session = await getSession({ req })
+  console.log("🚀 ~ file: [slug].tsx ~ line 41 ~ constgetServerSideProps:GetServerSideProps= ~ session", session)
   const { slug } = params as Params;
 
   const { postCollection: {

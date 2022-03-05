@@ -10,6 +10,7 @@ import { RichTextRender } from 'src/components/RichTextRender';
 
 // Contentful
 import type { Document } from '@contentful/rich-text-types'
+import Head from 'next/head';
 
 type PostProps = {
   post: {
@@ -23,6 +24,9 @@ type PostProps = {
 export default function Post({ post }: PostProps) {
   return (
     <div className="max-w-screen-md mx-auto mt-10 px-5">
+      <Head>
+        <title>{post.title} | Ignews</title>
+      </Head>
       <h1 className='text-5xl font-bold'>{post.title}</h1>
       <div className="my-10">
         <time className='block mb-3 text-[#A8A8B3]'>{post.publishedAt}</time>
@@ -38,7 +42,16 @@ type Params = {
 
 export const getServerSideProps: GetServerSideProps = async ({ req, params }) => {
   const session = await getSession({ req })
-  console.log("🚀 ~ file: [slug].tsx ~ line 41 ~ constgetServerSideProps:GetServerSideProps= ~ session", session)
+
+  if(!session?.activeSubscription) {
+    return {
+      redirect: { 
+        destination: `/posts/preview/${params?.slug}`,
+        permanent: false
+      }
+    }
+  }
+
   const { slug } = params as Params;
 
   const { postCollection: {
@@ -57,10 +70,6 @@ export const getServerSideProps: GetServerSideProps = async ({ req, params }) =>
       content: item.content.json
     }
   })[0]
-
-  // if(!session) {
-
-  // }
 
   return {
     props: { post: formatedPosts }

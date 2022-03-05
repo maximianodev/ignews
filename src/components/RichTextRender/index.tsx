@@ -17,7 +17,7 @@ const RICH_TEXT_OPTIONS: object = {
         }
       }
 
-      return <p className='my-3'>{children}</p>
+      return <p className='my-3 leading-6'>{children}</p>
     },
     [BLOCKS.HEADING_2]: (node: Document, children: string) => {
       return <h2 className='text-3xl text-bold mb-2 mt-6'>{children}</h2>

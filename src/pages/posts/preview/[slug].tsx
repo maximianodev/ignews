@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import type { GetStaticProps } from 'next';
+import type { GetStaticPaths, GetStaticProps } from 'next';
 
 // Queries
 import { graphQLClient } from '../../../services/contentful';
@@ -56,7 +56,7 @@ export default function PostPreview({ post }: PostPreviewProps) {
   );
 }
 
-export const getStaticPaths = () => {
+export const getStaticPaths: GetStaticPaths = async () => {
   return {
     paths: [],
     fallback: 'blocking'
